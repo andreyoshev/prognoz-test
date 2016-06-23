@@ -12,6 +12,12 @@
 		039D7F141D1C373000A22888 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 039D7F121D1C373000A22888 /* Main.storyboard */; };
 		039D7F161D1C373000A22888 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 039D7F151D1C373000A22888 /* Assets.xcassets */; };
 		039D7F191D1C373000A22888 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 039D7F171D1C373000A22888 /* LaunchScreen.storyboard */; };
+		039D7F221D1C397900A22888 /* AOPopoverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039D7F211D1C397900A22888 /* AOPopoverController.swift */; };
+		039D7F241D1C408700A22888 /* AOTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039D7F231D1C408700A22888 /* AOTableViewController.swift */; };
+		039D7F261D1C4D1B00A22888 /* AOListSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039D7F251D1C4D1B00A22888 /* AOListSelector.swift */; };
+		039D7F281D1C4D9D00A22888 /* AOListElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039D7F271D1C4D9D00A22888 /* AOListElement.swift */; };
+		039D7F2A1D1C4F2A00A22888 /* AOListElementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039D7F291D1C4F2A00A22888 /* AOListElementCell.swift */; };
+		039D7F2C1D1C53E400A22888 /* AOListSelectorDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039D7F2B1D1C53E400A22888 /* AOListSelectorDataSource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +28,12 @@
 		039D7F151D1C373000A22888 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		039D7F181D1C373000A22888 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		039D7F1A1D1C373000A22888 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		039D7F211D1C397900A22888 /* AOPopoverController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AOPopoverController.swift; sourceTree = "<group>"; };
+		039D7F231D1C408700A22888 /* AOTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AOTableViewController.swift; sourceTree = "<group>"; };
+		039D7F251D1C4D1B00A22888 /* AOListSelector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AOListSelector.swift; sourceTree = "<group>"; };
+		039D7F271D1C4D9D00A22888 /* AOListElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AOListElement.swift; sourceTree = "<group>"; };
+		039D7F291D1C4F2A00A22888 /* AOListElementCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AOListElementCell.swift; sourceTree = "<group>"; };
+		039D7F2B1D1C53E400A22888 /* AOListSelectorDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AOListSelectorDataSource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +66,7 @@
 		039D7F0D1D1C373000A22888 /* Prognoz-test */ = {
 			isa = PBXGroup;
 			children = (
+				039D7F201D1C395B00A22888 /* AOPopoverController */,
 				039D7F0E1D1C373000A22888 /* AppDelegate.swift */,
 				039D7F101D1C373000A22888 /* ViewController.swift */,
 				039D7F121D1C373000A22888 /* Main.storyboard */,
@@ -62,6 +75,19 @@
 				039D7F1A1D1C373000A22888 /* Info.plist */,
 			);
 			path = "Prognoz-test";
+			sourceTree = "<group>";
+		};
+		039D7F201D1C395B00A22888 /* AOPopoverController */ = {
+			isa = PBXGroup;
+			children = (
+				039D7F211D1C397900A22888 /* AOPopoverController.swift */,
+				039D7F231D1C408700A22888 /* AOTableViewController.swift */,
+				039D7F251D1C4D1B00A22888 /* AOListSelector.swift */,
+				039D7F2B1D1C53E400A22888 /* AOListSelectorDataSource.swift */,
+				039D7F271D1C4D9D00A22888 /* AOListElement.swift */,
+				039D7F291D1C4F2A00A22888 /* AOListElementCell.swift */,
+			);
+			path = AOPopoverController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -136,8 +162,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				039D7F2A1D1C4F2A00A22888 /* AOListElementCell.swift in Sources */,
+				039D7F2C1D1C53E400A22888 /* AOListSelectorDataSource.swift in Sources */,
 				039D7F111D1C373000A22888 /* ViewController.swift in Sources */,
+				039D7F241D1C408700A22888 /* AOTableViewController.swift in Sources */,
+				039D7F281D1C4D9D00A22888 /* AOListElement.swift in Sources */,
+				039D7F261D1C4D1B00A22888 /* AOListSelector.swift in Sources */,
 				039D7F0F1D1C373000A22888 /* AppDelegate.swift in Sources */,
+				039D7F221D1C397900A22888 /* AOPopoverController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,6 +285,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "Prognoz-test/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.oshev.Prognoz-test";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -264,6 +297,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "Prognoz-test/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.oshev.Prognoz-test";
 				PRODUCT_NAME = "$(TARGET_NAME)";
