@@ -39,8 +39,15 @@ class ViewController: UIViewController {
         for i in 0..<10 {
             let element = AOListElement()
             element.text = "\(i)"
+            let name = String(format: "icon_1_%02d", i+1)
+            print(name)
+            element.image = UIImage(named: name)
             elements.append(element)
         }
+        
+        let element = AOListElement()
+        element.text = "TEXT \n TEXT \n TEXT \n TEXT \n TEXT \n TEXT"
+        elements.append(element)
     }
 }
 

@@ -48,6 +48,7 @@ class AOTableViewController: UIViewController, AOListSelector {
     func createTableViewWithStyle(style: UITableViewStyle) {
         tableView = UITableView(frame: CGRectZero, style: style)
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.registerClass(AOListElementCell.self, forCellReuseIdentifier: AOListElementCell.cellIdentifier())
     }
     
@@ -114,3 +115,36 @@ extension AOTableViewController: UITableViewDataSource {
         return cell
     }
 }
+
+extension AOTableViewController: UITableViewDelegate {
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        var height: CGFloat = cellMinHeight
+        
+        if let element = dataSource?.listSelector(self, elementAtIndexPath: indexPath) as AOListElement! {
+            let cellHeight = AOListElementCell.heightForElement(element, iconSize: iconsSize, titleFont: cellFont, cellWidth: tableView.bounds.width)
+            height = max(cellHeight, height)
+        }
+        
+        print(height)
+        return height
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
