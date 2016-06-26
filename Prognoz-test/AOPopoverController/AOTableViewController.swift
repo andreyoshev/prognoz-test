@@ -227,6 +227,10 @@ extension AOTableViewController: UITableViewDelegate {
         
         return height
     }
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return dataSource?.listSelectorTitleForSection(self, section: section)
+    }
 }
 
 extension UITableView {
