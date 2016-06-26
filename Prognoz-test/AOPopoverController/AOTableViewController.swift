@@ -30,7 +30,10 @@ class AOTableViewController: UIViewController, AOListSelector {
             if (searchBar != nil) {
                 searchBar?.hidden = !showSearch
             }
-            viewDidLayoutSubviews()
+            if (isViewLoaded()) {
+                view.setNeedsLayout()
+                view.layoutIfNeeded()
+            }
         }
     }
     var searchBar: UISearchBar?
