@@ -23,6 +23,7 @@ class AOTableViewController: UIViewController, AOListSelector {
     var cellBackgroundColor: UIColor = UIColor.whiteColor()
     
     var showSearch: Bool = false
+    
     var headerComment: String? {
         didSet {
             if (headerComment != nil && headerCommentLabel != nil) {
@@ -49,6 +50,9 @@ class AOTableViewController: UIViewController, AOListSelector {
     var headerCommentFont: UIFont = UIFont.systemFontOfSize(17) {
         didSet {
             headerCommentLabel?.font = headerCommentFont
+            if (headerComment != nil && headerCommentLabel != nil) {
+                tableView.setAndLayoutTableCommentView(headerCommentLabel!, location: .header)
+            }
         }
     }
     var headerCommentTextColor: UIColor = UIColor.blackColor() {
@@ -65,6 +69,9 @@ class AOTableViewController: UIViewController, AOListSelector {
     var bottomCommentFont: UIFont = UIFont.systemFontOfSize(14) {
         didSet {
             bottomCommentLabel?.font = headerCommentFont
+            if (bottomComment != nil && bottomCommentLabel != nil) {
+                tableView.setAndLayoutTableCommentView(bottomCommentLabel!, location: .bottom)
+            }
         }
     }
     var bottomCommentTextColor: UIColor = UIColor.blackColor() {
@@ -127,6 +134,9 @@ class AOTableViewController: UIViewController, AOListSelector {
         headerCommentLabel = UILabel()
         headerCommentLabel?.numberOfLines = 0
         headerCommentLabel?.textAlignment = .Center
+        headerCommentLabel?.font = headerCommentFont
+        headerCommentLabel?.textColor = headerCommentTextColor
+        headerCommentLabel?.backgroundColor = headerCommentBackgroundColor
         if (headerComment != nil) {
             headerCommentLabel!.text = headerComment
             tableView.setAndLayoutTableCommentView(headerCommentLabel!, location: .header)
@@ -134,6 +144,9 @@ class AOTableViewController: UIViewController, AOListSelector {
         bottomCommentLabel = UILabel()
         bottomCommentLabel?.numberOfLines = 0
         bottomCommentLabel?.textAlignment = .Center
+        bottomCommentLabel?.font = bottomCommentFont
+        bottomCommentLabel?.textColor = bottomCommentTextColor
+        bottomCommentLabel?.backgroundColor = bottomCommentBackgroundColor
         if (bottomComment != nil) {
             bottomCommentLabel!.text = bottomComment
             tableView.setAndLayoutTableCommentView(bottomCommentLabel!, location: .bottom)

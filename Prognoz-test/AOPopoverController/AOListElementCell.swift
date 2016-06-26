@@ -60,7 +60,7 @@ class AOListElementCell: UITableViewCell {
     func setupView() {
         titleLabel = UILabel()
         titleLabel.numberOfLines = 0
-        titleLabel.backgroundColor = UIColor.yellowColor()
+        titleLabel.backgroundColor = UIColor.clearColor()
         
         contentView.addSubview(titleLabel)
         
