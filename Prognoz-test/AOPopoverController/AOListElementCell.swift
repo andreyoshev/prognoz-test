@@ -61,6 +61,7 @@ class AOListElementCell: UITableViewCell {
         titleLabel = UILabel()
         titleLabel.numberOfLines = 0
         titleLabel.backgroundColor = UIColor.yellowColor()
+        
         contentView.addSubview(titleLabel)
         
         iconView = UIImageView()

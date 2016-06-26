@@ -25,7 +25,7 @@ class AOTableViewController: UIViewController, AOListSelector {
     var showSearch: Bool = false
     var headerComment: String? {
         didSet {
-            if (headerComment != nil) {
+            if (headerComment != nil && headerCommentLabel != nil) {
                 headerCommentLabel!.text = headerComment
                 tableView.setAndLayoutTableCommentView(headerCommentLabel!, location: .header)
             }
@@ -36,7 +36,7 @@ class AOTableViewController: UIViewController, AOListSelector {
     }
     var bottomComment: String? {
         didSet {
-            if (bottomComment != nil) {
+            if (bottomComment != nil && bottomCommentLabel != nil) {
                 bottomCommentLabel!.text = bottomComment
                 tableView.setAndLayoutTableCommentView(bottomCommentLabel!, location: .bottom)
             }
@@ -78,10 +78,18 @@ class AOTableViewController: UIViewController, AOListSelector {
         }
     }
     
+    var closeButtonTitle: String? {
+        didSet {
+            closeButton?.setTitle(closeButtonTitle, forState: .Normal)
+        }
+    }
+    
     var headerCommentLabel: UILabel?
     var bottomCommentLabel: UILabel?
+    var closeButton: UIButton?
     
     weak var dataSource: AOListSelectorDataSource?
+    weak var selectorDelegate: AOListSelectorDelegate?
     
     var shouldShowIcons: Bool = false
     var iconsSize: CGSize = CGSizeZero
@@ -108,10 +116,32 @@ class AOTableViewController: UIViewController, AOListSelector {
         super.viewDidLoad()
         view.addSubview(tableView)
         
+        closeButton = UIButton()
+        closeButton?.setTitle(closeButtonTitle, forState: .Normal)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: closeButton!)
+        closeButton?.frame = CGRectMake(0, 0, view.bounds.width, 44)
+        closeButton?.setTitleColor(UIColor.blackColor(), forState: .Normal)
+        closeButton?.sizeToFit()
+        closeButton?.addTarget(self, action: #selector(closeAction), forControlEvents: .TouchUpInside)
+        
         headerCommentLabel = UILabel()
         headerCommentLabel?.numberOfLines = 0
+        headerCommentLabel?.textAlignment = .Center
+        if (headerComment != nil) {
+            headerCommentLabel!.text = headerComment
+            tableView.setAndLayoutTableCommentView(headerCommentLabel!, location: .header)
+        }
         bottomCommentLabel = UILabel()
         bottomCommentLabel?.numberOfLines = 0
+        bottomCommentLabel?.textAlignment = .Center
+        if (bottomComment != nil) {
+            bottomCommentLabel!.text = bottomComment
+            tableView.setAndLayoutTableCommentView(bottomCommentLabel!, location: .bottom)
+        }
+    }
+    
+    func closeAction() {
+        selectorDelegate?.listSelectorCloseAction(self)
     }
     
     override func viewDidLayoutSubviews() {
@@ -198,22 +228,3 @@ extension UITableView {
         (location == .header) ? (tableHeaderView = comment) : (tableFooterView = comment)
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -11,8 +11,17 @@ import UIKit
 class AOPopoverController: UIPopoverController, AOListSelector {
     
     var tableViewController: AOTableViewController!
+    var navigationController: UINavigationController!
+    var title: String? {
+        get {
+            return tableViewController.title
+        }
+        set(newValue) {
+            tableViewController.title = newValue
+        }
+    }
     
-    // MARK: - AOListSelector Properties
+    // MARK: - AOListSelector
     
     var cellMinHeight: CGFloat {
         get {
@@ -122,11 +131,21 @@ class AOPopoverController: UIPopoverController, AOListSelector {
         }
     }
     
+    var closeButtonTitle: String? {
+        get {
+            return tableViewController.closeButtonTitle
+        }
+        set(newValue) {
+            tableViewController.closeButtonTitle = newValue
+        }
+    }
+    
     weak var dataSource: AOListSelectorDataSource? {
         didSet {
             tableViewController.dataSource = dataSource
         }
     }
+    weak var selectorDelegate: AOListSelectorDelegate?
     
     class func createTableViewControllerWithTableViewStyle(tableViewStyle: UITableViewStyle) -> AOTableViewController {
         let tableVC = AOTableViewController(style: tableViewStyle)
@@ -135,12 +154,21 @@ class AOPopoverController: UIPopoverController, AOListSelector {
     
     init(tableViewStyle: UITableViewStyle) {
         let tableVC = self.dynamicType.createTableViewControllerWithTableViewStyle(tableViewStyle)
-        super.init(contentViewController: tableVC)
+        let navCtl = UINavigationController(rootViewController: tableVC)
+        super.init(contentViewController: navCtl)
+        navigationController = navCtl
         tableViewController = tableVC
         tableViewController.dataSource = self.dataSource
+        tableViewController.selectorDelegate = self
     }
     
     func reloadData() {
         tableViewController.reloadData()
+    }
+}
+
+extension AOPopoverController: AOListSelectorDelegate {
+    func listSelectorCloseAction(listSelector: AOListSelector) {
+        selectorDelegate?.listSelectorCloseAction(self)
     }
 }

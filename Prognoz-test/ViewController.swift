@@ -11,21 +11,24 @@ import UIKit
 class ViewController: UIViewController {
     
     var elements = [AOListElement]()
-    
-    // MARK: - IBAction
+    var popover: AOPopoverController?
     
     @IBAction func showPopover(sender: UIButton) {
-        let popover = AOPopoverController(tableViewStyle: .Plain)
-        popover.presentPopoverFromRect(sender.frame, inView: view, permittedArrowDirections: .Unknown, animated: true)
+        popover = AOPopoverController(tableViewStyle: .Plain)
+        popover!.presentPopoverFromRect(sender.frame, inView: view, permittedArrowDirections: .Unknown, animated: true)
         
-        popover.dataSource = self
-        popover.cellTextColor = UIColor.redColor()
-        popover.cellBackgroundColor = UIColor.greenColor()
-        popover.cellFont = UIFont.systemFontOfSize(20)
-        popover.headerComment = "Header Comment"
-        popover.bottomComment = "Bottom Comment"
-
-        popover.reloadData()
+        popover!.dataSource = self
+        popover!.selectorDelegate = self
+        
+        popover!.cellTextColor = UIColor.redColor()
+        popover!.cellBackgroundColor = UIColor.greenColor()
+        popover!.cellFont = UIFont.systemFontOfSize(20)
+        popover!.headerComment = "Header Comment"
+        popover!.bottomComment = "Bottom Comment"
+        popover!.title = "PopOver Title"
+        popover!.closeButtonTitle = "Close"
+        
+        popover!.reloadData()
     }
     
     override func viewDidLoad() {
@@ -61,4 +64,28 @@ extension ViewController: AOListSelectorDataSource {
         return elements[indexPath.row]
     }
 }
+
+extension ViewController: AOListSelectorDelegate {
+    func listSelectorCloseAction(listSelector: AOListSelector) {
+        if let ls = listSelector as? AOPopoverController {
+            ls.dismissPopoverAnimated(true)
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

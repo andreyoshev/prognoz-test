@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		03084EEC1D2004690075205C /* AOListSelectorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03084EEB1D2004690075205C /* AOListSelectorDelegate.swift */; };
 		039D7F0F1D1C373000A22888 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039D7F0E1D1C373000A22888 /* AppDelegate.swift */; };
 		039D7F111D1C373000A22888 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039D7F101D1C373000A22888 /* ViewController.swift */; };
 		039D7F141D1C373000A22888 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 039D7F121D1C373000A22888 /* Main.storyboard */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		03084EEB1D2004690075205C /* AOListSelectorDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AOListSelectorDelegate.swift; sourceTree = "<group>"; };
 		039D7F0B1D1C373000A22888 /* Prognoz-test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Prognoz-test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		039D7F0E1D1C373000A22888 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		039D7F101D1C373000A22888 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 				039D7F231D1C408700A22888 /* AOTableViewController.swift */,
 				039D7F251D1C4D1B00A22888 /* AOListSelector.swift */,
 				039D7F2B1D1C53E400A22888 /* AOListSelectorDataSource.swift */,
+				03084EEB1D2004690075205C /* AOListSelectorDelegate.swift */,
 				039D7F271D1C4D9D00A22888 /* AOListElement.swift */,
 				039D7F291D1C4F2A00A22888 /* AOListElementCell.swift */,
 			);
@@ -169,6 +172,7 @@
 				039D7F281D1C4D9D00A22888 /* AOListElement.swift in Sources */,
 				039D7F261D1C4D1B00A22888 /* AOListSelector.swift in Sources */,
 				039D7F0F1D1C373000A22888 /* AppDelegate.swift in Sources */,
+				03084EEC1D2004690075205C /* AOListSelectorDelegate.swift in Sources */,
 				039D7F221D1C397900A22888 /* AOPopoverController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -323,6 +327,7 @@
 				039D7F1F1D1C373000A22888 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

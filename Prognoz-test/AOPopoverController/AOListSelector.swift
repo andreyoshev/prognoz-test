@@ -26,7 +26,10 @@ protocol AOListSelector {
     var bottomCommentTextColor: UIColor { get set }
     var bottomCommentBackgroundColor: UIColor { get set }
     
+    var closeButtonTitle: String? { get set }
+    
     weak var dataSource: AOListSelectorDataSource? { get set }
+    weak var selectorDelegate: AOListSelectorDelegate? { get set }
     
     func reloadData()
 }
