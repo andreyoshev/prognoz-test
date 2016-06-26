@@ -10,10 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var elements1 = [AOListElement]()
-    var elements2 = [AOListElement]()
-    var sectionsTitles = [String]()
-    
+    var groupsOne = [AOListElementsGroup]()
     var popover: AOPopoverController?
     
     @IBAction func showPopover(sender: UIButton) {
@@ -43,56 +40,24 @@ class ViewController: UIViewController {
     }
 
     func loadElements() {
-        sectionsTitles.append("Section 1")
-        for i in 0..<10 {
-            let element = AOListElement()
-            element.text = "\(i)"
-            let name = String(format: "icon_1_%02d", i+1)
-            element.image = UIImage(named: name)
-            elements1.append(element)
+        for i in 0..<2 {
+            let group = AOListElementsGroup()
+            group.title = "Section \(i)"
+            for j in 0..<10 {
+                let element = AOListElement()
+                element.text = "Section: \(i), Row: \(j)"
+                let name = String(format: "icon_%d_%02d", i+1, j+1)
+                element.image = UIImage(named: name)
+                group.addElement(element)
+            }
+            groupsOne.append(group)
         }
-        
-        var element = AOListElement()
-        element.text = "TEXT \n TEXT \n TEXT \n TEXT \n TEXT \n TEXT"
-        elements1.append(element)
-        
-        sectionsTitles.append("Section 2")
-        for i in 0..<10 {
-            let element = AOListElement()
-            element.text = "\(i)"
-            let name = String(format: "icon_2_%02d", i+1)
-            element.image = UIImage(named: name)
-            elements2.append(element)
-        }
-        
-        element = AOListElement()
-        element.text = "TEXT \n TEXT \n TEXT \n TEXT \n TEXT \n TEXT"
-        elements2.append(element)
     }
 }
 
 extension ViewController: AOListSelectorDataSource {
-    func numberOfSectionsInListSelector(listSelector: AOListSelector) -> Int {
-        return 2
-    }
-    
-    func listSelector(listSelector: AOListSelector, numberOfRowsInSection section: Int) -> Int {
-        if (section == 0) {
-            return elements1.count
-        } else {
-            return elements2.count
-        }
-    }
-    
-    func listSelector(listSelector: AOListSelector, elementAtIndexPath indexPath: NSIndexPath) -> AOListElement {
-        if (indexPath.section == 0) {
-            return elements1[indexPath.row]
-        } else {
-            return elements2[indexPath.row]
-        }
-    }
-    func listSelectorTitleForSection(listSelector: AOListSelector, section: Int) -> String? {
-        return sectionsTitles[section]
+    func listSelectorElementsGroups(listSelector: AOListSelector) -> [AOListElementsGroup] {
+        return groupsOne
     }
 }
 

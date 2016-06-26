@@ -16,6 +16,9 @@ enum AOTableViewCommentLocation {
 class AOTableViewController: UIViewController, AOListSelector {
     var tableView: UITableView!
     var tableViewStyle: UITableViewStyle = .Plain
+    var elementsGroups: [AOListElementsGroup]?
+    
+    // MARK: - AOListSelector
     
     var cellMinHeight: CGFloat = 44
     var cellFont: UIFont = UIFont.systemFontOfSize(17)
@@ -101,6 +104,8 @@ class AOTableViewController: UIViewController, AOListSelector {
     var shouldShowIcons: Bool = false
     var iconsSize: CGSize = CGSizeZero
     
+    // MARK: - Life Cycle
+    
     init(style: UITableViewStyle) {
         super.init(nibName: nil, bundle: nil)
         tableViewStyle = style
@@ -167,11 +172,13 @@ class AOTableViewController: UIViewController, AOListSelector {
     func reloadData() {
         var showIcons: Bool = false
         iconsSize = CGSizeZero
+        elementsGroups = dataSource?.listSelectorElementsGroups(self)
         
-        if (dataSource != nil) {
-            for section in 0..<dataSource!.numberOfSectionsInListSelector(self) {
-                for row in 0..<dataSource!.listSelector(self, numberOfRowsInSection: section) {
-                    let element = dataSource!.listSelector(self, elementAtIndexPath: NSIndexPath(forRow: row, inSection: section))
+        if (elementsGroups != nil) {
+            for section in 0..<elementsGroups!.count {
+                let group: AOListElementsGroup = elementsGroups![section]
+                for row in 0..<group.elements.count {
+                    let element = group.elements[row]
                     if (element.image != nil) {
                         showIcons = true
                         iconsSize = element.image!.size
@@ -184,25 +191,29 @@ class AOTableViewController: UIViewController, AOListSelector {
         
         tableView.reloadData()
     }
+    
+    func elementAtIndexPath(indexPath: NSIndexPath) -> AOListElement? {
+        return (elementsGroups?[indexPath.section])?.elements[indexPath.row]
+    }
 }
 
 extension AOTableViewController: UITableViewDataSource {
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        guard let _ = dataSource
+        guard let _ = elementsGroups
             else { return 0 }
-        return dataSource!.numberOfSectionsInListSelector(self)
+        return elementsGroups!.count
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let _ = dataSource
+        guard let _ = elementsGroups
             else { return 0 }
-        return dataSource!.listSelector(self, numberOfRowsInSection: section)
+        return (elementsGroups![section]).elements.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(AOListElementCell.cellIdentifier()) as! AOListElementCell
         
-        if let element = dataSource?.listSelector(self, elementAtIndexPath: indexPath) as AOListElement! {
+        if let element = elementAtIndexPath(indexPath) as AOListElement! {
             cell.configureWithElement(element)
         }
         
@@ -220,7 +231,7 @@ extension AOTableViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         var height: CGFloat = cellMinHeight
         
-        if let element = dataSource?.listSelector(self, elementAtIndexPath: indexPath) as AOListElement! {
+        if let element = elementAtIndexPath(indexPath) as AOListElement! {
             let cellHeight = AOListElementCell.heightForElement(element, iconSize: iconsSize, titleFont: cellFont, cellWidth: tableView.bounds.width)
             height = max(cellHeight, height)
         }
@@ -229,7 +240,7 @@ extension AOTableViewController: UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return dataSource?.listSelectorTitleForSection(self, section: section)
+        return elementsGroups?[section].title
     }
 }
 

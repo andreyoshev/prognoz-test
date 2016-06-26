@@ -9,8 +9,5 @@
 import Foundation
 
 protocol AOListSelectorDataSource: class {
-    func numberOfSectionsInListSelector(listSelector: AOListSelector) -> Int
-    func listSelector(listSelector: AOListSelector, numberOfRowsInSection section: Int) -> Int
-    func listSelector(listSelector: AOListSelector, elementAtIndexPath indexPath: NSIndexPath) -> AOListElement
-    func listSelectorTitleForSection(listSelector: AOListSelector, section: Int) -> String?
+    func listSelectorElementsGroups(listSelector: AOListSelector) -> [AOListElementsGroup]
 }
