@@ -8,9 +8,9 @@
 
 import UIKit
 
-enum commentLoc {
-    case header
-    case bottom
+enum AOTableViewCommentLocation {
+    case Header
+    case Bottom
 }
 
 class AOTableViewController: UIViewController, AOListSelector {
@@ -28,7 +28,7 @@ class AOTableViewController: UIViewController, AOListSelector {
         didSet {
             if (headerComment != nil && headerCommentLabel != nil) {
                 headerCommentLabel!.text = headerComment
-                tableView.setAndLayoutTableCommentView(headerCommentLabel!, location: .header)
+                tableView.setAndLayoutTableCommentView(headerCommentLabel!, location: .Header)
             }
             else {
                 tableView.tableHeaderView = nil
@@ -39,7 +39,7 @@ class AOTableViewController: UIViewController, AOListSelector {
         didSet {
             if (bottomComment != nil && bottomCommentLabel != nil) {
                 bottomCommentLabel!.text = bottomComment
-                tableView.setAndLayoutTableCommentView(bottomCommentLabel!, location: .bottom)
+                tableView.setAndLayoutTableCommentView(bottomCommentLabel!, location: .Bottom)
             }
             else {
                 tableView.tableFooterView = nil
@@ -51,7 +51,7 @@ class AOTableViewController: UIViewController, AOListSelector {
         didSet {
             headerCommentLabel?.font = headerCommentFont
             if (headerComment != nil && headerCommentLabel != nil) {
-                tableView.setAndLayoutTableCommentView(headerCommentLabel!, location: .header)
+                tableView.setAndLayoutTableCommentView(headerCommentLabel!, location: .Header)
             }
         }
     }
@@ -70,7 +70,7 @@ class AOTableViewController: UIViewController, AOListSelector {
         didSet {
             bottomCommentLabel?.font = headerCommentFont
             if (bottomComment != nil && bottomCommentLabel != nil) {
-                tableView.setAndLayoutTableCommentView(bottomCommentLabel!, location: .bottom)
+                tableView.setAndLayoutTableCommentView(bottomCommentLabel!, location: .Bottom)
             }
         }
     }
@@ -139,7 +139,7 @@ class AOTableViewController: UIViewController, AOListSelector {
         headerCommentLabel?.backgroundColor = headerCommentBackgroundColor
         if (headerComment != nil) {
             headerCommentLabel!.text = headerComment
-            tableView.setAndLayoutTableCommentView(headerCommentLabel!, location: .header)
+            tableView.setAndLayoutTableCommentView(headerCommentLabel!, location: .Header)
         }
         bottomCommentLabel = UILabel()
         bottomCommentLabel?.numberOfLines = 0
@@ -149,7 +149,7 @@ class AOTableViewController: UIViewController, AOListSelector {
         bottomCommentLabel?.backgroundColor = bottomCommentBackgroundColor
         if (bottomComment != nil) {
             bottomCommentLabel!.text = bottomComment
-            tableView.setAndLayoutTableCommentView(bottomCommentLabel!, location: .bottom)
+            tableView.setAndLayoutTableCommentView(bottomCommentLabel!, location: .Bottom)
         }
     }
     
@@ -234,14 +234,23 @@ extension AOTableViewController: UITableViewDelegate {
 }
 
 extension UITableView {
-    func setAndLayoutTableCommentView(comment: UIView, location: commentLoc) {
-        (location == .header) ? (tableHeaderView = comment) : (tableFooterView = comment)
-        comment.setNeedsLayout()
-        comment.layoutIfNeeded()
-        let height = comment.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
-        var frame = comment.frame
+    func setAndLayoutTableCommentView(commentView: UIView, location: AOTableViewCommentLocation) {
+        setTableViewCommentLocation(commentView, location: location)
+        commentView.setNeedsLayout()
+        commentView.layoutIfNeeded()
+        let height = commentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
+        var frame = commentView.frame
         frame.size.height = height
-        comment.frame = frame
-        (location == .header) ? (tableHeaderView = comment) : (tableFooterView = comment)
+        commentView.frame = frame
+        setTableViewCommentLocation(commentView, location: location)
+    }
+    
+    func setTableViewCommentLocation(commentView: UIView, location: AOTableViewCommentLocation) {
+        switch location {
+        case .Header:
+            tableHeaderView = commentView
+        case .Bottom:
+            tableFooterView = commentView
+        }
     }
 }
