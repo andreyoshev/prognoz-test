@@ -25,7 +25,15 @@ class AOTableViewController: UIViewController, AOListSelector {
     var cellTextColor: UIColor = UIColor.blackColor()
     var cellBackgroundColor: UIColor = UIColor.whiteColor()
     
-    var showSearch: Bool = false
+    var showSearch: Bool = false {
+        didSet {
+            if (searchBar != nil) {
+                searchBar?.hidden = !showSearch
+            }
+            viewDidLayoutSubviews()
+        }
+    }
+    var searchBar: UISearchBar?
     
     var headerComment: String? {
         didSet {
@@ -126,6 +134,12 @@ class AOTableViewController: UIViewController, AOListSelector {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        searchBar = UISearchBar()
+        searchBar?.hidden = !showSearch
+        
+        
+        view.addSubview(searchBar!)
         view.addSubview(tableView)
         
         closeButton = UIButton()
@@ -164,7 +178,13 @@ class AOTableViewController: UIViewController, AOListSelector {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        tableView.frame = view.bounds
+        var tableViewY: CGFloat = 44
+        searchBar?.frame = CGRectMake(0, 44, view.bounds.width, 44)
+        if (showSearch && searchBar != nil) {
+            tableViewY = searchBar!.frame.maxY
+        }
+        
+        tableView.frame = CGRectMake(0, tableViewY, view.bounds.width, view.bounds.height - tableViewY)
     }
     
     // MARK: - AOListSelector

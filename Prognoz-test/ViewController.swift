@@ -20,6 +20,7 @@ class ViewController: UIViewController {
         popover!.dataSource = self
         popover!.selectorDelegate = self
         
+        popover!.showSearch = true
         popover!.cellTextColor = UIColor.redColor()
         popover!.cellBackgroundColor = UIColor.greenColor()
         popover!.cellFont = UIFont.systemFontOfSize(20)
