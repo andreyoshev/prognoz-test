@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SDK-uu-96X">
-                                <rect key="frame" x="277" y="285" width="46" height="30"/>
+                                <rect key="frame" x="277" y="550" width="46" height="30"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
                                     <action selector="showPopover:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qCb-Kh-t8o"/>
@@ -27,8 +27,8 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="SDK-uu-96X" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Gfo-t8-SBe"/>
-                            <constraint firstItem="SDK-uu-96X" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="OHB-u7-bWI"/>
+                            <constraint firstItem="SDK-uu-96X" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="393-AQ-PBW"/>
+                            <constraint firstAttribute="bottom" secondItem="SDK-uu-96X" secondAttribute="bottom" constant="20" symbolic="YES" id="Ln8-eW-Pm4"/>
                         </constraints>
                     </view>
                 </viewController>

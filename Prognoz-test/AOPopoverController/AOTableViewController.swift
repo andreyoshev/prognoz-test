@@ -17,6 +17,7 @@ class AOTableViewController: UIViewController, AOListSelector {
     var tableView: UITableView!
     var tableViewStyle: UITableViewStyle = .Plain
     var elementsGroups: [AOListElementsGroup]?
+    var filteredElements: [AOListElementsGroup]?
     
     // MARK: - AOListSelector
     
@@ -139,6 +140,7 @@ class AOTableViewController: UIViewController, AOListSelector {
         super.viewDidLoad()
         
         searchBar = UISearchBar()
+        searchBar?.delegate = self
         searchBar?.hidden = !showSearch
         
         
@@ -196,6 +198,7 @@ class AOTableViewController: UIViewController, AOListSelector {
         var showIcons: Bool = false
         iconsSize = CGSizeZero
         elementsGroups = dataSource?.listSelectorElementsGroups(self)
+        filteredElements = elementsGroups
         
         if (elementsGroups != nil) {
             for section in 0..<elementsGroups!.count {
@@ -216,21 +219,21 @@ class AOTableViewController: UIViewController, AOListSelector {
     }
     
     func elementAtIndexPath(indexPath: NSIndexPath) -> AOListElement? {
-        return (elementsGroups?[indexPath.section])?.elements[indexPath.row]
+        return (filteredElements?[indexPath.section])?.elements[indexPath.row]
     }
 }
 
 extension AOTableViewController: UITableViewDataSource {
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        guard let _ = elementsGroups
+        guard let _ = filteredElements
             else { return 0 }
-        return elementsGroups!.count
+        return filteredElements!.count
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let _ = elementsGroups
+        guard let _ = filteredElements
             else { return 0 }
-        return (elementsGroups![section]).elements.count
+        return (filteredElements![section]).elements.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -263,10 +266,34 @@ extension AOTableViewController: UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return elementsGroups?[section].title
+        return filteredElements?[section].title
     }
 }
 
+extension AOTableViewController: UISearchBarDelegate {
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        filteredElements?.removeAll()
+        if (searchText.characters.count == 0) {
+            filteredElements = elementsGroups
+        } else if (elementsGroups != nil) {
+            for group in elementsGroups! {
+                let newGroup = AOListElementsGroup()
+                newGroup.title = group.title
+                for element in group.elements {
+                    if (element.text != nil) {
+                        if (element.text!.lowercaseString.containsString(searchText.lowercaseString)) {
+                            newGroup.addElement(element)
+                        }
+                    }
+                }
+                if (newGroup.elements.count > 0) {
+                    filteredElements?.append(newGroup)
+                }
+            }
+        }
+        tableView.reloadData()
+    }
+}
 extension UITableView {
     func setAndLayoutTableCommentView(commentView: UIView, location: AOTableViewCommentLocation) {
         setTableViewCommentLocation(commentView, location: location)
