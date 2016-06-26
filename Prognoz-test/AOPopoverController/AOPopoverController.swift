@@ -68,7 +68,7 @@ class AOPopoverController: UIPopoverController, AOListSelector {
             return tableViewController.bottomComment
         }
         set(comment) {
-            tableViewController.headerComment = comment
+            tableViewController.bottomComment = comment
         }
     }
     

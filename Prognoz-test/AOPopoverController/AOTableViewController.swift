@@ -8,26 +8,78 @@
 
 import UIKit
 
+enum commentLoc {
+    case header
+    case bottom
+}
+
 class AOTableViewController: UIViewController, AOListSelector {
     var tableView: UITableView!
     var tableViewStyle: UITableViewStyle = .Plain
     
     var cellMinHeight: CGFloat = 44
-    var cellFont: UIFont = UIFont.systemFontOfSize(14)
+    var cellFont: UIFont = UIFont.systemFontOfSize(17)
     var cellTextColor: UIColor = UIColor.blackColor()
     var cellBackgroundColor: UIColor = UIColor.whiteColor()
     
     var showSearch: Bool = false
-    var headerComment: String?
-    var bottomComment: String?
+    var headerComment: String? {
+        didSet {
+            if (headerComment != nil) {
+                headerCommentLabel!.text = headerComment
+                tableView.setAndLayoutTableCommentView(headerCommentLabel!, location: .header)
+            }
+            else {
+                tableView.tableHeaderView = nil
+            }
+        }
+    }
+    var bottomComment: String? {
+        didSet {
+            if (bottomComment != nil) {
+                bottomCommentLabel!.text = bottomComment
+                tableView.setAndLayoutTableCommentView(bottomCommentLabel!, location: .bottom)
+            }
+            else {
+                tableView.tableFooterView = nil
+            }
+        }
+    }
     
-    var headerCommentFont: UIFont = UIFont.systemFontOfSize(14)
-    var headerCommentTextColor: UIColor = UIColor.blackColor()
-    var headerCommentBackgroundColor: UIColor = UIColor.blackColor()
+    var headerCommentFont: UIFont = UIFont.systemFontOfSize(17) {
+        didSet {
+            headerCommentLabel?.font = headerCommentFont
+        }
+    }
+    var headerCommentTextColor: UIColor = UIColor.blackColor() {
+        didSet {
+            headerCommentLabel?.textColor = headerCommentTextColor
+        }
+    }
+    var headerCommentBackgroundColor: UIColor = UIColor.blackColor() {
+        didSet {
+            headerCommentLabel?.backgroundColor = headerCommentTextColor
+        }
+    }
     
-    var bottomCommentFont: UIFont = UIFont.systemFontOfSize(14)
-    var bottomCommentTextColor: UIColor = UIColor.blackColor()
-    var bottomCommentBackgroundColor: UIColor = UIColor.whiteColor()
+    var bottomCommentFont: UIFont = UIFont.systemFontOfSize(14) {
+        didSet {
+            bottomCommentLabel?.font = headerCommentFont
+        }
+    }
+    var bottomCommentTextColor: UIColor = UIColor.blackColor() {
+        didSet {
+            bottomCommentLabel?.textColor = bottomCommentTextColor
+        }
+    }
+    var bottomCommentBackgroundColor: UIColor = UIColor.whiteColor() {
+        didSet {
+            bottomCommentLabel?.backgroundColor = bottomCommentBackgroundColor
+        }
+    }
+    
+    var headerCommentLabel: UILabel?
+    var bottomCommentLabel: UILabel?
     
     weak var dataSource: AOListSelectorDataSource?
     
@@ -55,6 +107,11 @@ class AOTableViewController: UIViewController, AOListSelector {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(tableView)
+        
+        headerCommentLabel = UILabel()
+        headerCommentLabel?.numberOfLines = 0
+        bottomCommentLabel = UILabel()
+        bottomCommentLabel?.numberOfLines = 0
     }
     
     override func viewDidLayoutSubviews() {
@@ -125,8 +182,20 @@ extension AOTableViewController: UITableViewDelegate {
             height = max(cellHeight, height)
         }
         
-        print(height)
         return height
+    }
+}
+
+extension UITableView {
+    func setAndLayoutTableCommentView(comment: UIView, location: commentLoc) {
+        (location == .header) ? (tableHeaderView = comment) : (tableFooterView = comment)
+        comment.setNeedsLayout()
+        comment.layoutIfNeeded()
+        let height = comment.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
+        var frame = comment.frame
+        frame.size.height = height
+        comment.frame = frame
+        (location == .header) ? (tableHeaderView = comment) : (tableFooterView = comment)
     }
 }
 
