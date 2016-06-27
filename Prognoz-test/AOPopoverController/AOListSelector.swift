@@ -15,6 +15,7 @@ protocol AOListSelector {
     var cellBackgroundColor: UIColor { get set }
     
     var showSearch: Bool { get set }
+    var multiSelect: Bool { get set }
     var headerComment: String? { get set }
     var bottomComment: String? { get set }
     

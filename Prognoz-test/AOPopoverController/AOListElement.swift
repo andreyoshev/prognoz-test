@@ -9,7 +9,7 @@
 import UIKit
 
 class AOListElement {
-    var identifier: Int?
+    var identifier: Int = 0
     var image: UIImage?
     var text: String?
 }

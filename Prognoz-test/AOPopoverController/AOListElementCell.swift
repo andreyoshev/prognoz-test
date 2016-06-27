@@ -19,6 +19,17 @@ class AOListElementCell: UITableViewCell {
     var showIcon: Bool = false
     var iconSize: CGSize = CGSizeZero
     
+    var bgColor: UIColor = UIColor.clearColor() {
+        didSet {
+            configureWithSelected(didSelected)
+        }
+    }
+    var didSelected: Bool = false {
+        didSet {
+            configureWithSelected(didSelected)
+        }
+    }
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupView()
@@ -57,11 +68,20 @@ class AOListElementCell: UITableViewCell {
         return height
     }
     
+    func configureWithSelected(selected: Bool) {
+        if (selected) {
+            contentView.backgroundColor = UIColor.lightGrayColor()
+        } else {
+            contentView.backgroundColor = bgColor
+        }
+    }
+    
     func setupView() {
+        selectionStyle = .None
+        
         titleLabel = UILabel()
         titleLabel.numberOfLines = 0
         titleLabel.backgroundColor = UIColor.clearColor()
-        
         contentView.addSubview(titleLabel)
         
         iconView = UIImageView()

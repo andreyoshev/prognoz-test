@@ -18,6 +18,7 @@ class AOTableViewController: UIViewController, AOListSelector {
     var tableViewStyle: UITableViewStyle = .Plain
     var elementsGroups: [AOListElementsGroup]?
     var filteredElements: [AOListElementsGroup]?
+    var selectedElementsIDs: [Int : Bool] = [:]
     
     // MARK: - AOListSelector
     
@@ -37,6 +38,8 @@ class AOTableViewController: UIViewController, AOListSelector {
             }
         }
     }
+    var multiSelect: Bool = false
+    
     var searchBar: UISearchBar?
     
     var headerComment: String? {
@@ -222,6 +225,7 @@ class AOTableViewController: UIViewController, AOListSelector {
         return (filteredElements?[indexPath.section])?.elements[indexPath.row]
     }
 }
+    // MARK: - UITableViewDataSource
 
 extension AOTableViewController: UITableViewDataSource {
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -241,17 +245,25 @@ extension AOTableViewController: UITableViewDataSource {
         
         if let element = elementAtIndexPath(indexPath) as AOListElement! {
             cell.configureWithElement(element)
+            let selected = selectedElementsIDs[element.identifier]
+            if (selected == true) {
+                cell.didSelected = true
+            } else {
+                cell.didSelected = false
+            }
         }
         
         cell.showIcon = shouldShowIcons
         cell.iconSize = iconsSize
         cell.titleLabel.font = cellFont
         cell.titleLabel.textColor = cellTextColor
-        cell.contentView.backgroundColor = cellBackgroundColor
+        cell.bgColor = cellBackgroundColor
+        
         
         return cell
     }
 }
+    // MARK: - UITableViewDelegate
 
 extension AOTableViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -268,7 +280,32 @@ extension AOTableViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return filteredElements?[section].title
     }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let elementID = elementAtIndexPath(indexPath)?.identifier
+        
+        guard let _ = elementID
+            else { return }
+        if (multiSelect) {
+            if (selectedElementsIDs[elementID!] == true) {
+                selectedElementsIDs.removeValueForKey(elementID!)
+            } else {
+                selectedElementsIDs[elementID!] = true
+            }
+        } else {
+            if (selectedElementsIDs[elementID!] == true) {
+                selectedElementsIDs.removeValueForKey(elementID!)
+            } else {
+                selectedElementsIDs.removeAll()
+                selectedElementsIDs[elementID!] = true
+            }
+        }
+        
+        tableView.reloadData()
+    }
 }
+
+    // MARK: - UISearchBarDelegate
 
 extension AOTableViewController: UISearchBarDelegate {
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
@@ -294,6 +331,7 @@ extension AOTableViewController: UISearchBarDelegate {
         tableView.reloadData()
     }
 }
+
 extension UITableView {
     func setAndLayoutTableCommentView(commentView: UIView, location: AOTableViewCommentLocation) {
         setTableViewCommentLocation(commentView, location: location)

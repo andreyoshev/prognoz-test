@@ -21,6 +21,7 @@ class ViewController: UIViewController {
         popover!.selectorDelegate = self
         
         popover!.showSearch = true
+        popover!.multiSelect = true
         
         popover!.cellTextColor = UIColor.redColor()
         popover!.cellBackgroundColor = UIColor.greenColor()
@@ -50,6 +51,7 @@ class ViewController: UIViewController {
             group.title = "Section \(i)"
             for j in 0..<10 {
                 let element = AOListElement()
+                element.identifier = 1000 * i + j
                 element.text = "Section: \(i), Row: \(j)"
                 let name = String(format: "icon_%d_%02d", i+1, j+1)
                 element.image = UIImage(named: name)

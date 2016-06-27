@@ -60,10 +60,19 @@ class AOPopoverController: UIPopoverController, AOListSelector {
         get {
             return tableViewController.showSearch
         }
-        set(show) {
-            tableViewController.showSearch = show
+        set(newValue) {
+            tableViewController.showSearch = newValue
         }
     }
+    var multiSelect: Bool {
+        get {
+            return tableViewController.multiSelect
+        }
+        set(newValue) {
+            tableViewController.multiSelect = newValue
+        }
+    }
+    
     var headerComment: String? {
         get {
             return tableViewController.headerComment
