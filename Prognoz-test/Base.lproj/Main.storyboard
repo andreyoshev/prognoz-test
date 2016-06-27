@@ -18,20 +18,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ryx-Jy-y6N">
-                                <rect key="frame" x="283" y="285" width="34" height="30"/>
+                                <rect key="frame" x="279" y="285" width="43" height="30"/>
                                 <state key="normal" title="Multi"/>
                                 <connections>
                                     <action selector="showPopoverMultiSelect:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6DF-fi-MMI"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="IDS Multi" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WzH-0S-e02">
-                                <rect key="frame" x="175" y="289" width="69" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IDS Multi" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WzH-0S-e02">
+                                <rect key="frame" x="170" y="289" width="69" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="ID Single" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hlf-T5-2WB">
-                                <rect key="frame" x="176" y="327" width="68" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ID Single" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hlf-T5-2WB">
+                                <rect key="frame" x="171" y="327" width="68" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -56,6 +56,7 @@
                             <constraint firstItem="SDK-uu-96X" firstAttribute="centerX" secondItem="ryx-Jy-y6N" secondAttribute="centerX" id="XfS-cJ-WlR"/>
                             <constraint firstItem="ryx-Jy-y6N" firstAttribute="leading" secondItem="WzH-0S-e02" secondAttribute="trailing" constant="40" id="g3q-Ut-8gv"/>
                             <constraint firstItem="SDK-uu-96X" firstAttribute="leading" secondItem="Hlf-T5-2WB" secondAttribute="trailing" constant="40" id="gc9-jh-GyK"/>
+                            <constraint firstItem="SDK-uu-96X" firstAttribute="width" secondItem="ryx-Jy-y6N" secondAttribute="width" id="gwH-7F-jxW"/>
                             <constraint firstItem="SDK-uu-96X" firstAttribute="top" secondItem="ryx-Jy-y6N" secondAttribute="bottom" constant="8" id="lME-zq-ICc"/>
                         </constraints>
                         <variation key="default">
