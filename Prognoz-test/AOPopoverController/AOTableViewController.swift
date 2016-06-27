@@ -363,6 +363,7 @@ extension AOTableViewController: UITableViewDelegate {
         }
         
         tableView.reloadData()
+        selectorDelegate?.listSelector(self, didSelectElementsWithIDs: Array(selectedElementsIDs.keys))
     }
 }
 

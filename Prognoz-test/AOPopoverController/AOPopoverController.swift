@@ -182,4 +182,8 @@ extension AOPopoverController: AOListSelectorDelegate {
     func listSelectorCloseAction(listSelector: AOListSelector) {
         selectorDelegate?.listSelectorCloseAction(self)
     }
+    
+    func listSelector(listSelector: AOListSelector, didSelectElementsWithIDs IDs: [Int]) {
+        selectorDelegate?.listSelector(self, didSelectElementsWithIDs: IDs)
+    }
 }

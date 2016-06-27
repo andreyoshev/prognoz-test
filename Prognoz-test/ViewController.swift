@@ -74,6 +74,10 @@ extension ViewController: AOListSelectorDelegate {
             ls.dismissPopoverAnimated(true)
         }
     }
+    
+    func listSelector(listSelector: AOListSelector, didSelectElementsWithIDs IDs: [Int]) {
+        // Code here
+    }
 }
 
 

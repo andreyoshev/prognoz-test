@@ -10,4 +10,5 @@ import Foundation
 
 protocol AOListSelectorDelegate: class {
     func listSelectorCloseAction(listSelector: AOListSelector)
+    func listSelector(listSelector: AOListSelector, didSelectElementsWithIDs IDs: [Int])
 }
