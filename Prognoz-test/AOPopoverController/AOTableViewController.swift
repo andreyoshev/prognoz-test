@@ -279,11 +279,13 @@ class AOTableViewController: UIViewController, AOListSelector {
             }
         }
         tableView.reloadData()
+        selectorDelegate?.listSelector(self, didSelectElementsWithIDs: Array(selectedElementsIDs.keys))
     }
     
     func actionDeselectAll() {
         selectedElementsIDs.removeAll()
         tableView.reloadData()
+        selectorDelegate?.listSelector(self, didSelectElementsWithIDs: Array(selectedElementsIDs.keys))
     }
 }
     // MARK: - UITableViewDataSource
