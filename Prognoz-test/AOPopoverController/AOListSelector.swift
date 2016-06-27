@@ -29,6 +29,9 @@ protocol AOListSelector {
     
     var closeButtonTitle: String? { get set }
     
+    var selectAllButtonTitle: String? { get set }
+    var deselectAllButtonTitile: String? { get set }
+    
     weak var dataSource: AOListSelectorDataSource? { get set }
     weak var selectorDelegate: AOListSelectorDelegate? { get set }
     

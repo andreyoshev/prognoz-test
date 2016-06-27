@@ -38,9 +38,11 @@ class AOTableViewController: UIViewController, AOListSelector {
             }
         }
     }
-    var multiSelect: Bool = false
-    
-    var searchBar: UISearchBar?
+    var multiSelect: Bool = false {
+        didSet {
+            configureToolbar()
+        }
+    }
     
     var headerComment: String? {
         didSet {
@@ -109,9 +111,23 @@ class AOTableViewController: UIViewController, AOListSelector {
         }
     }
     
+    var selectAllButtonTitle: String? = "Select All" {
+        didSet {
+            configureToolbar()
+        }
+    }
+    var deselectAllButtonTitile: String? = "Deselect All" {
+        didSet {
+            configureToolbar()
+        }
+    }
+    
+    var searchBar: UISearchBar?
     var headerCommentLabel: UILabel?
     var bottomCommentLabel: UILabel?
     var closeButton: UIButton?
+    var selectAllBarButtonItem: UIBarButtonItem?
+    var deselectAllBarButtonItem: UIBarButtonItem?
     
     weak var dataSource: AOListSelectorDataSource?
     weak var selectorDelegate: AOListSelectorDelegate?
@@ -178,6 +194,8 @@ class AOTableViewController: UIViewController, AOListSelector {
             bottomCommentLabel!.text = bottomComment
             tableView.setAndLayoutTableCommentView(bottomCommentLabel!, location: .Bottom)
         }
+        
+        configureToolbar()
     }
     
     func closeAction() {
@@ -192,7 +210,14 @@ class AOTableViewController: UIViewController, AOListSelector {
             tableViewY = searchBar!.frame.maxY
         }
         
-        tableView.frame = CGRectMake(0, tableViewY, view.bounds.width, view.bounds.height - tableViewY)
+        var toolbarHeight: CGFloat = 0
+        if (multiSelect && navigationController != nil) {
+            toolbarHeight = navigationController!.toolbar.bounds.height
+        }
+        tableView.frame = CGRectMake(0,
+                                     tableViewY,
+                                     view.bounds.width,
+                                     view.bounds.height - tableViewY - toolbarHeight)
     }
     
     // MARK: - AOListSelector
@@ -223,6 +248,42 @@ class AOTableViewController: UIViewController, AOListSelector {
     
     func elementAtIndexPath(indexPath: NSIndexPath) -> AOListElement? {
         return (filteredElements?[indexPath.section])?.elements[indexPath.row]
+    }
+    
+    func configureToolbar() {
+        guard isViewLoaded()
+            else { return }
+        if (multiSelect) {
+            let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
+            
+            selectAllBarButtonItem = UIBarButtonItem(title: selectAllButtonTitle,
+                                                     style: .Plain,
+                                                     target: self,
+                                                     action: #selector(actionSelectAll))
+            deselectAllBarButtonItem = UIBarButtonItem(title: deselectAllButtonTitile,
+                                                       style: .Plain,
+                                                       target: self,
+                                                       action: #selector(actionDeselectAll))
+            setToolbarItems([selectAllBarButtonItem!, flexibleSpace, deselectAllBarButtonItem!], animated: false)
+        } else {
+            setToolbarItems(nil, animated: false)
+        }
+        navigationController?.setToolbarHidden(!multiSelect, animated: false)
+    }
+    
+    func actionSelectAll() {
+        for group in filteredElements! {
+            for element in group.elements {
+                let elementID = element.identifier
+                selectedElementsIDs[elementID] = true
+            }
+        }
+        tableView.reloadData()
+    }
+    
+    func actionDeselectAll() {
+        selectedElementsIDs.removeAll()
+        tableView.reloadData()
     }
 }
     // MARK: - UITableViewDataSource
@@ -259,7 +320,6 @@ extension AOTableViewController: UITableViewDataSource {
         cell.titleLabel.textColor = cellTextColor
         cell.bgColor = cellBackgroundColor
         
-        
         return cell
     }
 }
@@ -270,7 +330,10 @@ extension AOTableViewController: UITableViewDelegate {
         var height: CGFloat = cellMinHeight
         
         if let element = elementAtIndexPath(indexPath) as AOListElement! {
-            let cellHeight = AOListElementCell.heightForElement(element, iconSize: iconsSize, titleFont: cellFont, cellWidth: tableView.bounds.width)
+            let cellHeight = AOListElementCell.heightForElement(element,
+                                                                iconSize: iconsSize,
+                                                                titleFont: cellFont,
+                                                                cellWidth: tableView.bounds.width)
             height = max(cellHeight, height)
         }
         
@@ -282,22 +345,20 @@ extension AOTableViewController: UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let elementID = elementAtIndexPath(indexPath)?.identifier
-        
-        guard let _ = elementID
+        guard let elementID = elementAtIndexPath(indexPath)?.identifier
             else { return }
         if (multiSelect) {
-            if (selectedElementsIDs[elementID!] == true) {
-                selectedElementsIDs.removeValueForKey(elementID!)
+            if (selectedElementsIDs[elementID] == true) {
+                selectedElementsIDs.removeValueForKey(elementID)
             } else {
-                selectedElementsIDs[elementID!] = true
+                selectedElementsIDs[elementID] = true
             }
         } else {
-            if (selectedElementsIDs[elementID!] == true) {
-                selectedElementsIDs.removeValueForKey(elementID!)
+            if (selectedElementsIDs[elementID] == true) {
+                selectedElementsIDs.removeValueForKey(elementID)
             } else {
                 selectedElementsIDs.removeAll()
-                selectedElementsIDs[elementID!] = true
+                selectedElementsIDs[elementID] = true
             }
         }
         
@@ -337,6 +398,7 @@ extension UITableView {
         setTableViewCommentLocation(commentView, location: location)
         commentView.setNeedsLayout()
         commentView.layoutIfNeeded()
+        
         let height = commentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
         var frame = commentView.frame
         frame.size.height = height

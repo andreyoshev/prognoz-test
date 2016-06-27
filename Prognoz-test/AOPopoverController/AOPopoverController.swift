@@ -9,7 +9,6 @@
 import UIKit
 
 class AOPopoverController: UIPopoverController, AOListSelector {
-    
     var tableViewController: AOTableViewController!
     var navigationController: UINavigationController!
     var title: String? {
@@ -149,6 +148,9 @@ class AOPopoverController: UIPopoverController, AOListSelector {
         }
     }
     
+    var selectAllButtonTitle: String?
+    var deselectAllButtonTitile: String?
+    
     weak var dataSource: AOListSelectorDataSource? {
         didSet {
             tableViewController.dataSource = dataSource
@@ -167,7 +169,7 @@ class AOPopoverController: UIPopoverController, AOListSelector {
         super.init(contentViewController: navCtl)
         navigationController = navCtl
         tableViewController = tableVC
-        tableViewController.dataSource = self.dataSource
+        tableViewController.dataSource = dataSource
         tableViewController.selectorDelegate = self
     }
     

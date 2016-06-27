@@ -48,7 +48,10 @@ class AOListElementCell: UITableViewCell {
     // ширины ячейки
     // Считаем, что если размер картинки нулевой, значит картинка отсутствует.
     
-    class func heightForElement(element: AOListElement, iconSize: CGSize, titleFont: UIFont, cellWidth: CGFloat) -> CGFloat {
+    class func heightForElement(element: AOListElement,
+                                iconSize: CGSize,
+                                titleFont: UIFont,
+                                cellWidth: CGFloat) -> CGFloat {
         var avaliableWidth = cellWidth - kAOListElementCellHorizontalPadding * 2
         var height = kAOListElementCellVerticalPadding * 2
         
