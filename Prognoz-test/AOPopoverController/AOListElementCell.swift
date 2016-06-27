@@ -83,7 +83,10 @@ class AOListElementCell: UITableViewCell {
         var titleLabelX = kAOListElementCellHorizontalPadding
         
         if (showIcon) {
-            iconView.frame = CGRectMake(kAOListElementCellHorizontalPadding, kAOListElementCellVerticalPadding, iconSize.width, iconSize.height)
+            iconView.frame = CGRectMake(kAOListElementCellHorizontalPadding,
+                                        kAOListElementCellVerticalPadding,
+                                        iconSize.width,
+                                        iconSize.height)
             titleLabelX = iconView.frame.maxX + kAOListElementCellIconOffset
         }
         
@@ -95,7 +98,10 @@ class AOListElementCell: UITableViewCell {
             textSize = text.boundingRectWithSize(CGSizeMake(avaliableWidth, CGFloat.max), options: .UsesLineFragmentOrigin, attributes: [NSFontAttributeName : titleLabel.font], context: nil).size
         }
         
-        titleLabel.frame = CGRectMake(titleLabelX, kAOListElementCellVerticalPadding, textSize.width, textSize.height)
+        titleLabel.frame = CGRectMake(titleLabelX,
+                                      kAOListElementCellVerticalPadding,
+                                      textSize.width,
+                                      textSize.height)
     }
 }
 

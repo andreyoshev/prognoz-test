@@ -21,14 +21,18 @@ class ViewController: UIViewController {
         popover!.selectorDelegate = self
         
         popover!.showSearch = true
+        
         popover!.cellTextColor = UIColor.redColor()
         popover!.cellBackgroundColor = UIColor.greenColor()
         popover!.cellFont = UIFont.systemFontOfSize(20)
+        
         popover!.headerComment = "Header Comment"
         popover!.headerCommentTextColor = UIColor.redColor()
         popover!.headerCommentBackgroundColor = UIColor.yellowColor()
         popover!.headerCommentFont = UIFont.boldSystemFontOfSize(23)
+        
         popover!.bottomComment = "Bottom Comment"
+        
         popover!.title = "PopOver Title"
         popover!.closeButtonTitle = "Close"
         
