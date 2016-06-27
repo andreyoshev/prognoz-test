@@ -151,11 +151,7 @@ class AOPopoverController: UIPopoverController, AOListSelector {
     var selectAllButtonTitle: String?
     var deselectAllButtonTitile: String?
     
-    weak var dataSource: AOListSelectorDataSource? {
-        didSet {
-            tableViewController.dataSource = dataSource
-        }
-    }
+    weak var dataSource: AOListSelectorDataSource?
     weak var selectorDelegate: AOListSelectorDelegate?
     
     class func createTableViewControllerWithTableViewStyle(tableViewStyle: UITableViewStyle) -> AOTableViewController {
@@ -169,12 +165,19 @@ class AOPopoverController: UIPopoverController, AOListSelector {
         super.init(contentViewController: navCtl)
         navigationController = navCtl
         tableViewController = tableVC
-        tableViewController.dataSource = dataSource
+        tableViewController.dataSource = self
         tableViewController.selectorDelegate = self
     }
     
     func reloadData() {
         tableViewController.reloadData()
+    }
+}
+extension AOPopoverController: AOListSelectorDataSource {
+    func listSelectorElementsGroups(listSelector: AOListSelector) -> [AOListElementsGroup] {
+        guard let _ = dataSource
+            else { return [AOListElementsGroup]() }
+        return dataSource!.listSelectorElementsGroups(self)
     }
 }
 
